@@ -1,0 +1,10 @@
+HLL	T_PTROBJ_HLL
+uint32_t	T_IV
+
+################################################################
+INPUT
+
+T_PTROBJ_HLL
+	$var = GET_HLLPTR($arg); 
+
+
