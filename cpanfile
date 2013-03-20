@@ -1,5 +1,7 @@
 #!perl
+requires 'perl' => '5.008003';
 requires 'XSLoader';
+requires 'Carp';
 
 on 'configure' => sub {
     requires 'Module::Build::Pluggable';

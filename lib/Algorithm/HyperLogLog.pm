@@ -4,7 +4,7 @@ use warnings;
 use 5.008003;
 use XSLoader;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 our $PERL_ONLY;
 if ( !defined $PERL_ONLY ) {
@@ -35,7 +35,7 @@ __END__
 
 =head1 NAME
 
-Algorithm::HyperLogLog - Implementation of the HyperLogLog algorithm
+Algorithm::HyperLogLog - Implementation of the HyperLogLog cardinality estimation algorithm
 
 =head1 SYNOPSIS
 
