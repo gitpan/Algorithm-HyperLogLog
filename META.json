@@ -58,7 +58,7 @@
    "provides" : {
       "Algorithm::HyperLogLog" : {
          "file" : "lib/Algorithm/HyperLogLog.pm",
-         "version" : "0.04"
+         "version" : "0.05"
       },
       "Algorithm::HyperLogLog::PP" : {
          "file" : "lib/Algorithm/HyperLogLog/PP.pm",
@@ -75,5 +75,5 @@
          "url" : "git://github.com/hideo55/p5-Algorithm-HyperLogLog.git"
       }
    },
-   "version" : "0.04"
+   "version" : "0.05"
 }
