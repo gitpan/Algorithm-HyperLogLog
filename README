@@ -11,7 +11,15 @@ SYNOPSIS
           $hll->add($_);
       }
   
-      my $cardinality = $hll->estimate();
+      my $cardinality = $hll->estimate(); # Estimate cardinality
+      $hll->dump_to_file('hll_register.dump');# Dumps internal data
+
+    Construct object from dumped file.
+
+      use Algorithm::HyperLogLog;
+  
+      # Restore internal state 
+      my $hll = Algorithm::HyperLogLog->new_from_file('hll_register.dump');
 
 DESCRIPTION
     This module is implementation of the HyperLogLog algorithm.
@@ -27,11 +35,22 @@ METHODS
 
     `$b` must be a integer between 4 and 16.
 
+  new_from_file($filename)
+    This method constructs object and restore the internal data of object
+    from dumped file(dumped by dump_to_file() method).
+
+  dump_to_file($filename)
+    This method dumps the internal data of an object to a file.
+
   add($data)
     Adds element to the cardinality estimator.
 
   estimate()
     Returns estimated cardinality value in floation point number.
+
+  register_size()
+    Return number of register.(In the XS impelementation, this equals size
+    in bytes)
 
   XS()
     If using XS backend, this method return true value.

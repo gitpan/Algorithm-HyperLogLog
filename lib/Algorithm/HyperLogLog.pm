@@ -3,8 +3,9 @@ use strict;
 use warnings;
 use 5.008003;
 use XSLoader;
+use Carp qw(croak);
 
-our $VERSION = '0.05';
+our $VERSION = '0.10';
 
 our $PERL_ONLY;
 if ( !defined $PERL_ONLY ) {
@@ -13,13 +14,47 @@ if ( !defined $PERL_ONLY ) {
 
 if ( !exists $INC{'Algorithm/HyperLogLog/PP.pm'} ) {
     if ( !$PERL_ONLY ) {
-        $PERL_ONLY = !eval {
-            XSLoader::load __PACKAGE__, $VERSION;
-        };
+        $PERL_ONLY = !eval { XSLoader::load __PACKAGE__, $VERSION; };
     }
-    if ( $PERL_ONLY ) {
+    if ($PERL_ONLY) {
         require 'Algorithm/HyperLogLog/PP.pm';
     }
+}
+
+sub new_from_file {
+    my ( $class, $filename ) = @_;
+    open my $fh, '<', $filename or die $!;
+    my $on_error = sub { close $fh; croak "Invalid dump file($filename)"; };
+
+    binmode $fh;
+    my ( @dumpdata, $buf, $readed );
+
+    # Read register size data
+    $readed = read( $fh, $buf, 1 );
+    $on_error->() if $readed != 1;
+    my $k = unpack 'C', $buf;
+
+    # Read register content data
+    my $m = 2**$k;
+    $readed = read  $fh, $buf, $m;
+    $on_error->() if $readed != $m;
+    close $fh;
+    @dumpdata = unpack 'C*', $buf;
+    my $self = $class->_new_from_dump( $k, \@dumpdata );
+    return $self;
+}
+
+sub dump_to_file {
+    my ( $self, $filename ) = @_;
+    my $k        = log( $self->register_size ) / log(2);    # Calculate log2(register_size)
+    my $dumpdata = $self->_dump_register();
+    open my $fh, '>', $filename or die $!;
+    binmode $fh;
+    my $buf = pack 'C', $k;
+    print $fh $buf;
+    $buf = pack 'C*', @$dumpdata;
+    print $fh $buf;
+    close $fh;
 }
 
 sub XS {
@@ -47,8 +82,15 @@ Algorithm::HyperLogLog - Implementation of the HyperLogLog cardinality estimatio
       $hll->add($_);
   }
   
-  my $cardinality = $hll->estimate();
+  my $cardinality = $hll->estimate(); # Estimate cardinality
+  $hll->dump_to_file('hll_register.dump');# Dumps internal data
 
+Construct object from dumped file.
+
+  use Algorithm::HyperLogLog;
+  
+  # Restore internal state 
+  my $hll = Algorithm::HyperLogLog->new_from_file('hll_register.dump');
 
 =head1 DESCRIPTION
 
@@ -66,6 +108,14 @@ Constructor.
 
 `$b` must be a integer between 4 and 16.
 
+=head2 new_from_file($filename)
+
+This method constructs object and restore the internal data of object from dumped file(dumped by dump_to_file() method).
+
+=head2 dump_to_file($filename)
+
+This method dumps the internal data of an object to a file.
+
 =head2 add($data)
 
 Adds element to the cardinality estimator.
@@ -73,6 +123,10 @@ Adds element to the cardinality estimator.
 =head2 estimate()
 
 Returns estimated cardinality value in floation point number.
+
+=head2 register_size()
+
+Return number of register.(In the XS impelementation, this equals size in bytes)
 
 =head2 XS()
 

@@ -14,9 +14,16 @@ on 'build' => sub {
 };
 
 on 'test' => sub {
-    requires 'Test::More'     => '0.98';
-    requires 'Test::Fatal'    => '0.008';
+    requires 'Test::More'  => '0.98';
+    requires 'Test::Fatal' => '0.008';
+    requires 'File::Temp';
 };
 
 on 'develop' => sub {
+    requires 'Test::Spelling';
+    requires 'Test::Perl::Critic';
+    requires 'Test::Pod';
+    requires 'Test::Pod::Coverage';
+    requires 'Software::License';
 };
+

@@ -2,7 +2,8 @@ package Algorithm::HyperLogLog::PP;
 use strict;
 use warnings;
 use 5.008003;
-use Carp qw(croak);
+use Carp ();
+use Config;
 use constant {
     HLL_HASH_SEED => 313,
     TWO_32        => 4294967296.0,
@@ -21,7 +22,7 @@ sub new {
     my ( $class, $k ) = @_;
 
     if ( $k < 4 || $k > 16 ) {
-        croak "Number of ragisters must be in the range [4,16]";
+        Carp::croak "Number of ragisters must be in the range [4,16]";
     }
 
     my $m         = 1 << $k;
@@ -48,6 +49,23 @@ sub new {
     };
     bless $self, $class;
     return $self;
+}
+
+sub _new_from_dump {
+    my ($class, $k, $data) = @_;
+    my $self = $class->new($k);
+    $self->{registers} = $data;
+    return $self;
+}
+
+sub _dump_register {
+    my $self = shift;
+    return $self->{registers};
+}
+
+sub register_size {
+    my $self = shift;
+    return $self->{m};
 }
 
 sub add {
@@ -101,38 +119,38 @@ sub _rotl32 {
 
 sub _fmix32 {
     my $h = shift;
-    $h = ($h ^ ( $h >> 16 ));
+    $h = ( $h ^ ( $h >> 16 ) );
     {
-	    use integer;
-    	$h = _to_uint( ( $h * 0x85ebca6b ) & 0xffffffff );
-	}
+        use integer;
+        $h = _to_uint( ( $h * 0x85ebca6b ) & 0xffffffff );
+    }
     $h = ( $h ^ ( $h >> 13 ) );
-	{
-		use integer;
-    	$h = _to_uint( ( $h * 0xc2b2ae35 ) & 0xffffffff );
-	}
+    {
+        use integer;
+        $h = _to_uint( ( $h * 0xc2b2ae35 ) & 0xffffffff );
+    }
     $h = ( $h ^ ( $h >> 16 ) );
     return $h;
 }
 
 sub _mmix32 {
     my $k1 = shift;
-	use integer;
+    use integer;
     $k1 = _to_uint( ( $k1 * 0xcc9e2d51 ) & 0xffffffff );
     $k1 = _rotl32( $k1, 15 );
-    return _to_uint(( $k1 * 0x1b873593 ) & 0xffffffff);
+    return _to_uint( ( $k1 * 0x1b873593 ) & 0xffffffff );
 }
 
 sub _murmur32 {
     my ( $key, $seed ) = @_;
-	if( !defined $seed ){
-	    $seed = 0;
-	}
+    if ( !defined $seed ) {
+        $seed = 0;
+    }
     utf8::encode($key);
     my $len        = length($key);
     my $num_blocks = int( $len / 4 );
     my $tail_len   = $len % 4;
-    my @vals       = unpack( 'V*C*', $key );
+    my @vals       = unpack 'V*C*', $key;
     my @tail       = splice( @vals, scalar(@vals) - $tail_len, $tail_len );
     my $h1         = $seed;
 
@@ -140,8 +158,8 @@ sub _murmur32 {
         my $k1 = $block;
         $h1 ^= _mmix32($k1);
         $h1 = _rotl32( $h1, 13 );
-		use integer;
-        $h1 = _to_uint(( $h1 * 5 + 0xe6546b64 ) & 0xffffffff);
+        use integer;
+        $h1 = _to_uint( ( $h1 * 5 + 0xe6546b64 ) & 0xffffffff );
     }
 
     if ( @tail > 0 ) {
@@ -149,11 +167,11 @@ sub _murmur32 {
         for my $c1 ( reverse @tail ) {
             $k1 = ( ( $k1 << 8 ) | $c1 );
         }
-		$k1 = _mmix32($k1);
+        $k1 = _mmix32($k1);
         $h1 = ( $h1 ^ $k1 );
     }
-	$h1 =  ($h1 ^ $len);
-	$h1 =  _fmix32($h1);
+    $h1 = ( $h1 ^ $len );
+    $h1 = _fmix32($h1);
     return $h1;
 }
 
@@ -168,8 +186,8 @@ sub _rho {
 }
 
 sub _to_uint {
-	no integer;
-	return 0 || $_[0];
+    no integer;
+    return 0 || $_[0];
 }
 
 1;
