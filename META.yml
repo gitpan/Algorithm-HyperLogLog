@@ -37,7 +37,7 @@ no_index:
 provides:
   Algorithm::HyperLogLog:
     file: lib/Algorithm/HyperLogLog.pm
-    version: 0.10
+    version: 0.11
   Algorithm::HyperLogLog::PP:
     file: lib/Algorithm/HyperLogLog/PP.pm
     version: 0
@@ -49,4 +49,4 @@ resources:
   bugtracker: https://github.com/hideo55/p5-Algorithm-HyperLogLog/issues
   homepage: https://github.com/hideo55/p5-Algorithm-HyperLogLog/tree
   repository: git://github.com/hideo55/p5-Algorithm-HyperLogLog.git
-version: 0.10
+version: 0.11

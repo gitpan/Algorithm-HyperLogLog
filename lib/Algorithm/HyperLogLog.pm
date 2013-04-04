@@ -2,10 +2,9 @@ package Algorithm::HyperLogLog;
 use strict;
 use warnings;
 use 5.008003;
-use XSLoader;
 use Carp qw(croak);
 
-our $VERSION = '0.10';
+our $VERSION = '0.11';
 
 our $PERL_ONLY;
 if ( !defined $PERL_ONLY ) {
@@ -14,7 +13,8 @@ if ( !defined $PERL_ONLY ) {
 
 if ( !exists $INC{'Algorithm/HyperLogLog/PP.pm'} ) {
     if ( !$PERL_ONLY ) {
-        $PERL_ONLY = !eval { XSLoader::load __PACKAGE__, $VERSION; };
+        require XSLoader;
+        $PERL_ONLY = !eval { XSLoader::load( __PACKAGE__, $VERSION ); };
     }
     if ($PERL_ONLY) {
         require 'Algorithm/HyperLogLog/PP.pm';
@@ -36,7 +36,7 @@ sub new_from_file {
 
     # Read register content data
     my $m = 2**$k;
-    $readed = read  $fh, $buf, $m;
+    $readed = read $fh, $buf, $m;
     $on_error->() if $readed != $m;
     close $fh;
     @dumpdata = unpack 'C*', $buf;
