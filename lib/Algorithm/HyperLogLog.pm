@@ -1,10 +1,10 @@
 package Algorithm::HyperLogLog;
 use strict;
 use warnings;
-use 5.008003;
+use 5.008008;
 use Carp qw(croak);
 
-our $VERSION = '0.11';
+our $VERSION = '0.12';
 
 our $PERL_ONLY;
 if ( !defined $PERL_ONLY ) {
