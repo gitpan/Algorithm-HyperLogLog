@@ -12,23 +12,25 @@ use Module::Build::Pluggable (
 );
 
 my $builder = Module::Build::Pluggable->new(
-    module_name => 'Algorithm::HyperLogLog',
-    dist_author => 'Hideaki Ohno<hide.o.j55@gmail.com>',
-    license     => 'perl',
-    c_source    => 'src',
-    xs_files    => { './src/hyperloglog.xs' => './lib/Algorithm/HyperLogLog.xs', },
-    no_index    => { 'directory' => [ 't', 'xt', 'inc', 'eg' ] },
+    module_name    => 'Algorithm::HyperLogLog',
+    dist_author    => 'Hideaki Ohno<hide.o.j55@gmail.com>',
+    license        => 'perl',
+    c_source       => 'xs',
+    xs_files       => { './xs/hyperloglog.xs' => './lib/Algorithm/HyperLogLog.xs', },
+    allow_pureperl => 1,
+    no_index       => { 'directory' => [ 't', 'xt', 'inc', 'eg' ] },
     test_files => ( -d '.git' || $ENV{RELEASE_TESTING} ) ? [qw(t/ xt/)] : ['t/'],
     create_readme  => 1,
     create_license => 1,
     add_to_cleanup => [
-        'Algorithm-HyperLogLog-*', 'MANIFEST.bak',      'lib/Algorithm/*.o',
-        'lib/Algorithm/*.h',       'lib/Algorithm/*.c', 'lib/Algorithm/*.xs',
+        'Algorithm-HyperLogLog-*', 'MANIFEST.bak', 'lib/Algorithm/*.o', 'lib/Algorithm/*.h',
+        'lib/Algorithm/*.c',       'lib/Algorithm/*.xs',
     ],
     meta_add => {
         keywords  => [qw/HyperLogLog cardinality/],
-        resources => { bugtracker => 'https://github.com/hideo55/p5-Algorithm-HyperLogLog/issues', },
+        resources => { bugtracker => 'https://github.icom/hideo55/p5-Algorithm-HyperLogLog/issues', },
     },
 );
 
 $builder->create_build_script();
+

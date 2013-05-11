@@ -4,7 +4,7 @@
       "Hideaki Ohno<hide.o.j55@gmail.com>"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "Module::Build version 0.4004, CPAN::Meta::Converter version 2.130880",
+   "generated_by" : "Module::Build version 0.4005, CPAN::Meta::Converter version 2.130880",
    "keywords" : [
       "HyperLogLog",
       "cardinality"
@@ -31,18 +31,18 @@
             "ExtUtils::CBuilder" : "0",
             "Module::Build::Pluggable::CPANfile" : "0.04",
             "Module::Build::Pluggable::GithubMeta" : "0",
-            "Module::Build::Pluggable::XSUtil" : "1.01"
+            "Module::Build::Pluggable::XSUtil" : "1.00"
          }
       },
       "configure" : {
          "requires" : {
             "Devel::CheckCompiler" : "0.01",
             "ExtUtils::ParseXS" : "2.21",
-            "Module::Build" : "0.40",
+            "Module::Build" : "0.4005",
             "Module::Build::Pluggable" : "0",
             "Module::Build::Pluggable::CPANfile" : "0.04",
             "Module::Build::Pluggable::GithubMeta" : "0",
-            "Module::Build::Pluggable::XSUtil" : "1.01"
+            "Module::Build::Pluggable::XSUtil" : "1.00"
          }
       },
       "runtime" : {
@@ -56,24 +56,24 @@
    "provides" : {
       "Algorithm::HyperLogLog" : {
          "file" : "lib/Algorithm/HyperLogLog.pm",
-         "version" : "0.14"
+         "version" : "0.15"
       },
       "Algorithm::HyperLogLog::PP" : {
          "file" : "lib/Algorithm/HyperLogLog/PP.pm",
-         "version" : "0.14"
+         "version" : "0.15"
       }
    },
    "release_status" : "stable",
    "resources" : {
       "bugtracker" : {
-         "web" : "https://github.com/hideo55/p5-Algorithm-HyperLogLog/issues"
+         "web" : "https://github.icom/hideo55/p5-Algorithm-HyperLogLog/issues"
       },
       "homepage" : "https://github.com/hideo55/p5-Algorithm-HyperLogLog/tree",
       "repository" : {
          "url" : "git://github.com/hideo55/p5-Algorithm-HyperLogLog.git"
       }
    },
-   "version" : "0.14",
+   "version" : "0.15",
    "x_test_requires" : {
       "File::Temp" : "0",
       "Test::Fatal" : "0.008",

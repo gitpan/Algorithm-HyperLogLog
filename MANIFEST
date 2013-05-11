@@ -9,14 +9,14 @@ MANIFEST			This list of files
 META.json
 META.yml
 README
-src/hyperloglog.xs
-src/murmur3.h
 t/00_compile.t
 t/01_new.t
 t/02_basic.t
 t/03_pp.t
 t/04_dump_restore.t
 t/05_dump_restore_pp.t
+xs/hyperloglog.xs
+xs/murmur3.h
 typemap
 xt/01_podspell.t
 xt/02_perlcritic.t
