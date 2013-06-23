@@ -1,14 +1,14 @@
 Build.PL
 Changes
+LICENSE
+META.json
+README.md
+builder/MyBuilder.pm
 cpanfile
 eg/sample.pl
 lib/Algorithm/HyperLogLog.pm
 lib/Algorithm/HyperLogLog/PP.pm
-LICENSE
-MANIFEST			This list of files
-META.json
-META.yml
-README.mkdn
+minil.toml
 t/00_compile.t
 t/01_new.t
 t/02_basic.t
@@ -18,8 +18,8 @@ t/05_dump_restore_pp.t
 typemap
 xs/hyperloglog.xs
 xs/murmur3.h
-xt/01_podspell.t
-xt/02_perlcritic.t
-xt/03_pod.t
-xt/04_pod_coverage.t
+xt/perlcritic.t
 xt/perlcriticrc
+xt/pod_coverage.t
+META.yml
+MANIFEST
