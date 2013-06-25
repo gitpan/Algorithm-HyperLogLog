@@ -62,11 +62,11 @@
    "provides" : {
       "Algorithm::HyperLogLog" : {
          "file" : "lib/Algorithm/HyperLogLog.pm",
-         "version" : "0.21"
+         "version" : "0.22"
       },
       "Algorithm::HyperLogLog::PP" : {
          "file" : "lib/Algorithm/HyperLogLog/PP.pm",
-         "version" : "0.21"
+         "version" : "0.22"
       }
    },
    "release_status" : "stable",
@@ -80,7 +80,7 @@
          "web" : "https://github.com/hideo55/p5-Algorithm-HyperLogLog"
       }
    },
-   "version" : "0.21",
+   "version" : "0.22",
    "x_contributors" : [
       "hideo55 <hide.o.j55@gmail.com>"
    ]
