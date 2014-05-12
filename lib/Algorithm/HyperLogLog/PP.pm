@@ -10,7 +10,7 @@ use constant {
     NEG_TWO_32    => -4294967296.0,
 };
 
-our $VERSION = "0.22";
+our $VERSION = "0.23";
 
 require Algorithm::HyperLogLog;
 
@@ -110,6 +110,19 @@ sub estimate {
         $estimate = NEG_TWO_32 * log( 1.0 - ( $estimate / TWO_32 ) );
     }
     return $estimate;
+}
+
+sub merge {
+    my ($self, $other) = @_;
+    my $m    = $self->{m};
+
+    die "hll size misatch" if $self->{m} != $other->{m};
+
+    for (my $i=0; $i<$m; $i++) {
+        if ($self->{registers}[$i] < $other->{registers}[$i]) {
+            $self->{registers}[$i] = $other->{registers}[$i];
+        }
+    }
 }
 
 sub XS {

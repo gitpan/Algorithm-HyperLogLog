@@ -15,6 +15,7 @@ t/02_basic.t
 t/03_pp.t
 t/04_dump_restore.t
 t/05_dump_restore_pp.t
+t/06_merge.t
 typemap
 xs/hyperloglog.xs
 xs/murmur3.h

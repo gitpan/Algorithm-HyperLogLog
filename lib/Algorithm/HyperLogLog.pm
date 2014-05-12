@@ -4,7 +4,7 @@ use warnings;
 use 5.008008;
 use Carp qw(croak);
 
-our $VERSION = '0.22';
+our $VERSION = '0.23';
 
 our $PERL_ONLY;
 if ( !defined $PERL_ONLY ) {
@@ -123,6 +123,10 @@ Adds element to the cardinality estimator.
 =head2 estimate()
 
 Returns estimated cardinality value in floating point number.
+
+=head2 merge($other)
+
+Merges the estimate from 'other' into this object, returning the estimate of their union.
 
 =head2 register_size()
 
